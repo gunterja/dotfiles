@@ -27,6 +27,14 @@ set autoread
 " improve screen refresh for terminal vim
 set ttyfast
 
+" Open new split panes to right and bottom, which feels more natural than Vim’s default:
+set splitbelow
+set splitright
+
+" Treat all lines equally, even if wrapped
+nmap k gk
+nmap j gj
+
 " screen not redrawn during command execution<
 set lazyredraw
 
@@ -67,7 +75,7 @@ set wrap
 " Use line numbers in the gutter
 set number
 
-" Allow nvim/vim to copy to the macOS clipboard
+" Allow nvim/vim to copy to the macOS clipboard using the mouse/trackpad
 set mouse=
 set cb=unnamed
 
@@ -85,6 +93,18 @@ set noswapfile
 
 " Set 7 lines to the cursor when moving vertically using arrows or j/k
 set so=7
+
+" Map 'jk' and 'kj' to <esc> while in insert mode
+imap jk <esc>
+imap kj <esc>
+
+" Map Ctrl-S to function like Command-S in a GUI editor(i.e. Save)
+map <C-s> <esc>:w<CR>
+imap <C-s> <esc>:w<CR>
+
+" Custom mappings to open and source .vimrc
+nmap <Leader>vr :vsp $MYVIMRC<CR>
+nmap <Leader>so :source $MYVIMRC<CR>
 
 " Fuzzy Finder plugins and using pt for searching
 let g:ctrlp_map = ',f' "type comma and then f to activate ctrlP
