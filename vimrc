@@ -3,6 +3,9 @@ filetype off
 syntax on
 filetype plugin indent on
 
+" Turn the goddamn bell off
+set belloff=all
+
 " Set the background to dark
 set background=dark
 
