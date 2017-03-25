@@ -34,6 +34,9 @@ set ttyfast
 set splitbelow
 set splitright
 
+" Automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd = 
+
 " Treat all lines equally, even if wrapped
 nmap k gk
 nmap j gj
@@ -142,6 +145,35 @@ let g:gitugtter_sign_column_always = 1
 " Make GitGutter symbols show up faster than default
 set updatetime=250
 
+" Make lightline display the git branch and other basic settings
+let g:lightline = {
+      \ 'colorscheme': 'jellybeans',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'fugitive', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component': {
+      \   'readonly': '%{&filetype=="help"?"":&readonly?"":""}',
+      \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
+      \ },
+      \ 'component_function': {
+      \   'fugitive': 'LightlineFugitive'
+      \ },
+      \ 'component_visible_condition': {
+      \   'readonly': '(&filetype!="help"&& &readonly)',
+      \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
+      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '', 'right': '' }
+      \ }
 
-
+function! LightlineFugitive()
+  if exists("*fugitive#head")
+    let mark = ' '
+    let branch = fugitive#head()
+    return branch !=# '' ? ' '.branch : ''
+  endif
+  return ''
+endfunction
 
