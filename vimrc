@@ -112,6 +112,20 @@ imap <C-s> <esc>:w<CR>
 nmap <Leader>vr :vsp $MYVIMRC<CR>
 nmap <Leader>so :source $MYVIMRC<CR>
 
+" Rebind keys for neovim's terminal mode
+if has('nvim')
+  tnoremap <Esc> <C-\><C-n>
+  tnoremap <A-[> <Esc>
+  tnoremap <a-h> <c-\><c-n><c-w>h
+  tnoremap <a-j> <c-\><c-n><c-w>j
+  tnoremap <a-k> <c-\><c-n><c-w>k
+  tnoremap <a-l> <c-\><c-n><c-w>l
+  nnoremap <a-h> <c-w>h
+  nnoremap <a-j> <c-w>j
+  nnoremap <a-k> <c-w>k
+  nnoremap <a-l> <c-w>l
+endif
+
 " Fuzzy Finder plugins and using pt for searching
 let g:ctrlp_map = ',f' "type comma and then f to activate ctrlP
 " use a custom command to do searching instead of CtrlP's built in search
