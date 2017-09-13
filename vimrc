@@ -3,6 +3,9 @@ filetype off
 syntax on
 filetype plugin indent on
 
+" Set proper formatting and spellcheck for commit messages
+autocmd Filetype gitcommit setlocal spell textwidth=72
+
 " Turn the goddamn bell off
 set belloff=all
 
