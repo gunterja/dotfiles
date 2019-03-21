@@ -1,7 +1,89 @@
-execute pathogen#infect()
-filetype off
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+" alternatively, pass a path where Vundle should install plugins
+"call vundle#begin('~/some/path/here')
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'mileszs/ack.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'FelikZ/ctrlp-py-matcher'
+Plugin 'dyng/ctrlsf.vim'
+Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plugin 'itchyny/lightline.vim'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/nerdtree'
+Plugin 'ervandew/supertab'
+Plugin 'tpope/vim-bundler'
+Plugin 'altercation/vim-colors-solarized'
+Plugin 'tpope/vim-dispatch'
+Plugin 'elixir-editors/vim-elixir'
+Plugin 'tpope/vim-fugitive'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
+Plugin 'maxmellon/vim-jsx-pretty'
+Plugin 'sheerun/vim-polyglot'
+Plugin 'tpope/vim-rails'
+Plugin 'tpope/vim-repeat'
+Plugin 'vim-ruby/vim-ruby'
+Plugin 'tpope/vim-sensible'
+Plugin 'tpope/vim-surround'
+
+" The following are examples of different formats supported.
+" Keep Plugin commands between vundle#begin/end.
+" plugin on GitHub repo
+"  Plugin 'tpope/vim-fugitive'
+" plugin from http://vim-scripts.org/vim/scripts.html
+" Plugin 'L9'
+" Git plugin not hosted on GitHub
+"  Plugin 'git://git.wincent.com/command-t.git'
+" git repos on your local machine (i.e. when working on your own plugin)
+"  Plugin 'file:///home/gmarik/path/to/plugin'
+" The sparkup vim script is in a subdirectory of this repo called vim.
+" Pass the path to set the runtimepath properly.
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+" Install L9 and avoid a Naming conflict if you've already installed a
+" different version somewhere else.
+" Plugin 'ascenator/L9', {'name': 'newL9'}
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
 syntax on
 filetype plugin indent on
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
+" :PluginSearch foo - searches for foo; append `!` to refresh local cache
+" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+" Put your non-Plugin stuff after this line
+
+" Turn deoplete on by default
+call deoplete#enable()
+
+" Enable Syntax Highlighting through vim-javascript plugin
+let g:javascript_plugin_jsdoc = 1
+
+" vim_jsx_pretty setup
+"let g:vim_jsx_pretty_enable_jsx_highlight = 0 " default 1
+
+" Colorful style vim-js-only
+let g:vim_jsx_pretty_colorful_config = 1 " default 0
+
+" VIM-JSX highlighting
+let g:jsx_ext_required = 0
+
+" Turn the numbers off in terminal mode
+au TermOpen * setlocal nonumber norelativenumber
 
 " Set proper formatting and spellcheck for commit messages
 autocmd Filetype gitcommit setlocal spell textwidth=72
@@ -85,7 +167,7 @@ set wrap
 set number
 
 " Allow nvim/vim to copy to the macOS clipboard using the mouse/trackpad
-set mouse=
+set mouse=a
 set cb=unnamed
 
 " Configure backspace so it acts as it should act
@@ -193,4 +275,5 @@ function! LightlineFugitive()
   endif
   return ''
 endfunction
+
 
