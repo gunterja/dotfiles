@@ -213,7 +213,8 @@ endif
 
 " Fuzzy Finder plugins and using pt for searching
 let g:ctrlp_map = ',f' "type comma and then f to activate ctrlP
-let g:ctrlp_cmd = 'CtrlPMRU' "start CtrlP in MRU mode
+let g:ctrlp_cmd = 'CtrlPMixed' "start CtrlP in Mixed mode
+
 " use a custom command to do searching instead of CtrlP's built in search
 " which is slow.
 let g:ctrlp_user_command = 'pt %s -i --nocolor --nogroup --hidden
