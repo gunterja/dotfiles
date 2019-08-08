@@ -194,7 +194,8 @@ map <C-s> <esc>:w<CR>
 imap <C-s> <esc>:w<CR>
 
 " Custom mappings to open and source .vimrc
-nmap <Leader>vr :vsp $MYVIMRC<CR>
+"nmap <Leader>vr :vsp $MYVIMRC<CR>
+nmap <Leader>vr :vsp ~/.vimrc<CR>
 nmap <Leader>so :source $MYVIMRC<CR>
 
 " Rebind keys for neovim's terminal mode
@@ -214,6 +215,7 @@ endif
 " Fuzzy Finder plugins and using pt for searching
 let g:ctrlp_map = ',f' "type comma and then f to activate ctrlP
 let g:ctrlp_cmd = 'CtrlPMixed' "start CtrlP in Mixed mode
+let g:ctrlp_working_path_mode = 'ra' "Look for files in this project
 
 " use a custom command to do searching instead of CtrlP's built in search
 " which is slow.
