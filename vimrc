@@ -27,6 +27,7 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'maxmellon/vim-jsx-pretty'
+Plugin 'roxma/vim-hug-neovim-rpc'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-repeat'
@@ -120,7 +121,7 @@ set splitbelow
 set splitright
 
 " Automatically rebalance windows on vim resize
-autocmd VimResized * :wincmd = 
+autocmd VimResized * :wincmd =
 
 " Treat all lines equally, even if wrapped
 nmap k gk
@@ -164,7 +165,16 @@ set si
 set wrap
 
 " Use line numbers in the gutter
+" turn hybrid line numbers on
+" set number relativenumber
+" set nu rnu
 set number
+
+augroup numbertoggle
+  autocmd!
+  autocmd BufEnter,FocusGained,InsertLeave,WinEnter * if &nu && mode() != "i" | set rnu   | endif
+  autocmd BufLeave,FocusLost,InsertEnter,WinLeave   * if &nu                  | set nornu | endif
+augroup END
 
 " Allow nvim/vim to copy to the macOS clipboard using the mouse/trackpad
 set mouse=a
@@ -230,7 +240,7 @@ let g:ctrlp_user_command = 'pt %s -i --nocolor --nogroup --hidden
 let g:ctrlp_use_caching = 0
 
 " Set shortcut for Ack
-map <Leader>F :Ack 
+map <Leader>F :Ack
 
 " Trying to set Ack to use pt for search
 let g:ackprg = 'pt --nocolor --nogroup'

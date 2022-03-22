@@ -1,26 +1,15 @@
+# This is Git's per-user configuration file.
 [user]
 	name = Jeremy Gunter
 	email = gunterja@gmail.com
 [color]
 	ui = auto
 [core]
-	excludesfile = /Users/Flop/.gitignore_global
+	excludesfile = ~/.gitignore_global
 	autocrlf = input
 	safecrlf = true
-	editor = 'nvim' 
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
-[push]
-	default = simple
-[filter "lfs"]
-	clean = git lfs clean %f
-	smudge = git lfs smudge %f
-  required = true
+	editor = 'nvim'
 [alias]
-  save = !sh -c 'export PREV=$(git symbolic-ref HEAD|cut -d/ -f3-) && git checkout -b "$1" && git commit -am "$1" && git checkout "$PREV"' -
-  hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
-
+	unstage = reset HEAD --
+	stash-unstaged = stash -k -u
+	col = checkout @{-1}
