@@ -290,4 +290,29 @@ function! LightlineFugitive()
   return ''
 endfunction
 
+" Use a line cursor within insert mode and a block cursor everywhere else.
+"
+" Using iTerm2? Go-to preferences / profile / colors and disable the smart bar
+" cursor color. Then pick a cursor and highlight color that matches your theme.
+" That will ensure your cursor is always visible within insert mode.
+"
+" Reference chart of values:
+"   Ps = 0  -> blinking block.
+"   Ps = 1  -> blinking block (default).
+"   Ps = 2  -> steady block.
+"   Ps = 3  -> blinking underline.
+"   Ps = 4  -> steady underline.
+"   Ps = 5  -> blinking bar (xterm).
+"   Ps = 6  -> steady bar (xterm).
+" let &t_SI = "\e[5 q"
+" let &t_EI = "\e[2 q"
 
+" Enable blinking together with different cursor shapes for insert/command mode, and cursor highlighting:
+  set guicursor=n-v-c:block,i-ci-ve:ver25,r-cr:hor20,o:hor50
+  \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
+  \,n-v-c-sm:block-blinkon0
+
+" Display whitespace characters as visible characters
+set list
+set listchars=tab:-›\ ,trail:⋅
+set lcs+=space:·
