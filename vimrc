@@ -314,5 +314,16 @@ endfunction
 
 " Display whitespace characters as visible characters
 set list
-set listchars=tab:-›\ ,trail:⋅
+set listchars=tab:→\ ,trail:⋅
 set lcs+=space:·
+
+" Function to strip trailing whitespace.
+function! <SID>StripTrailingWhitespaces()
+    let l = line(".")
+    let c = col(".")
+    %s/\s\+$//e
+    call cursor(l, c)
+  endfun
+
+" Call the whitespace stripping function on write.
+autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
