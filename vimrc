@@ -17,6 +17,7 @@ Plugin 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plugin 'itchyny/lightline.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
+Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-bundler'
 Plugin 'altercation/vim-colors-solarized'
@@ -35,22 +36,6 @@ Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
 
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-"  Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
-" Git plugin not hosted on GitHub
-"  Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"  Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -138,12 +123,6 @@ set hlsearch
 
 " Make search act like search in modern browsers
 set incsearch
-
-" Show matching brackets when text indicator is over them
-set showmatch
-
-" How many tenths of a second to blink when matching brackets
-set mat=2
 
 " Use spaces instead of tabs
 set expandtab
@@ -312,6 +291,14 @@ endfunction
   \,a:blinkwait700-blinkoff400-blinkon250-Cursor/lCursor
   \,n-v-c-sm:block-blinkon0
 
+" Show matching brackets when text indicator is over them
+set showmatch
+" This didn't seem to do anything. Commenting out for now
+" hi MatchParen cterm=bold ctermbg=lightgrey ctermfg=lightyellow
+
+" How many tenths of a second to blink when matching brackets
+set mat=8
+
 " Display whitespace characters as visible characters
 set list
 set listchars=tab:→\ ,trail:⋅
@@ -327,3 +314,23 @@ function! <SID>StripTrailingWhitespaces()
 
 " Call the whitespace stripping function on write.
 autocmd BufWritePre * :call <SID>StripTrailingWhitespaces()
+
+" Some golang specific settings. Testing this out to see if I like it.
+augroup vimrc_golang
+  autocmd!
+  autocmd FileType go iabbrev <buffer> err- if err != nil {<C-j>log.Fatal(err)<C-j>}<C-j>
+  autocmd FileType go setlocal tabstop=4 shiftwidth=4 noexpandtab copyindent softtabstop=0 listchars=tab:→\ ,trail:⋅ lcs+=space:⋅
+
+  if exists("$GOPATH")
+    let s:gopaths = split($GOPATH, ':')
+    for s:gopath in s:gopaths
+      "set up Golint    https://github.com/golang/lint
+      if isdirectory(s:gopath."/src/github.com/golang/lint/misc/vim")
+        exe 'set runtimepath+='.s:gopath.'/src/github.com/golang/lint/misc/vim'
+        autocmd BufWritePost,FileWritePost *.go execute 'Lint' | cwindow
+        break
+      endif
+    endfor
+  endif
+augroup END
+
