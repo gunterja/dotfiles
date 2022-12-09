@@ -125,3 +125,6 @@ export XERNEAS_DIR=~/code/xerneas
 # Add the SpringDirectory
 export SPRING_DIRECTORY=~/code
 
+[[ ! -f $SPRING_DIRECTORY/spring-cli/init.sh ]] || source $SPRING_DIRECTORY/spring-cli/init.sh
+
+
