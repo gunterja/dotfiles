@@ -1,0 +1,130 @@
+# If you come from bash you might have to change your $PATH.
+# export PATH=$HOME/bin:/usr/local/bin:$PATH
+
+unsetopt nomatch
+
+# Make Homebrew completions work
+FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Settings for spaceship theme
+SPACESHIP_AWS_SHOW="false"
+SPACESHIP_BATTERY_SHOW="false"
+SPACESHIP_DIR_COLOR="184"
+SPACESHIP_DIR_TRUNC_REPO="true"
+SPACESHIP_DIR_TRUNC="0"
+SPACESHIP_DOCKER_COMPOSE_SHOW="false"
+SPACESHIP_EXEC_TIME_SHOW="false"
+SPACESHIP_GIT_BRANCH_COLOR="164"
+SPACESHIP_GIT_STATUS_COLOR="252"
+SPACESHIP_NODE_SHOW="false"
+SPACESHIP_PACKAGE_SHOW="false"
+SPACESHIP_PROMPT_ADD_NEWLINE="false"
+SPACESHIP_RUBY_SHOW="false"
+SPACESHIP_GCLOUD_SHOW="false"
+SPACESHIP_GOLANG_SHOW="false"
+SPACESHIP_DOCKER_SHOW="false"
+
+# Specifying here to try and speed things up
+SPACESHIP_PROMPT_ORDER=(user dir git line_sep node char)
+# Listing all the options here for future use
+# SPACESHIP_PROMPT_ORDER=(user host dir git node exec_time line_sep jobs exit_code char)
+
+
+# This is for when you install the theme with brew
+source /opt/homebrew/opt/spaceship/spaceship.zsh
+
+# This is for when you install the theme with git
+#source "/Users/jeremygunter/.oh-my-zsh/custom/themes/spaceship.zsh-theme"
+
+# Custom Aliases
+alias lr='ls -hartl' # List all files in order by size
+alias get='curl -OL' # Alias the word 'get' followed by a URL to write the response to a file and follow any redirects
+alias ipext='curl ipecho.net/plain && echo' # Type 'ipext' to get your external IP
+alias iploc='ipconfig getifaddr en0' # Type 'iploc' to get your local IP
+alias home='~/code'
+alias sozsh='source ~/.zshrc'
+alias zshconfig='nvim ~/.zshrc'
+alias locals='nvim ~/.local_aliases'
+alias tt='torture_test'
+alias star_wars='nc towel.blinkenlights.nl 23'
+
+# Local Aliases
+source ~/.local_aliases
+
+# Custom Functions
+torture_test() {
+  for i in `seq $1` ; do rspec $2 ; [[ ! $? = 0 ]] && break ; done
+}
+
+killport() { lsof -i tcp:$1 | awk 'NR!=1 {print $2}' | xargs kill ; }
+
+# Kill and remove all running docker containers
+container-killall() { docker ps -aq | xargs docker stop | xargs docker rm ; }
+
+# Reset all the SpringHealth docker DBs
+reset-docker-db () {
+  echo 'resetting docker databases'
+  make rotom-schema
+..make rotom-migrate
+..make rotom-seed
+..make diglet-refresh-db
+..make clear-access-token
+..make rotom-export-users
+..make diglet-update-passwords
+..echo 'docker databases reset'
+}
+
+# Uncomment the following line to use hyphen-insensitive completion.
+# Case-sensitive completion must be off. _ and - will be interchangeable.
+# HYPHEN_INSENSITIVE="true"
+
+# Allow omz to auto-update
+zstyle ':omz:update' mode auto      # update automatically without asking
+
+# Uncomment the following line to enable command auto-correction.
+# ENABLE_CORRECTION="true"
+
+# Uncomment the following line if you want to change the command execution time
+# stamp shown in the history command output.
+# You can set one of the optional three formats:
+# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
+# or set a custom format using the strftime function format specifications,
+# see 'man strftime' for details.
+HIST_STAMPS="dd.mm.yyyy"
+
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(git rails ruby zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting)
+
+source $ZSH/oh-my-zsh.sh
+
+# User configuration
+
+# export MANPATH="/usr/local/man:$MANPATH"
+
+# You may need to manually set your language environment
+# export LANG=en_US.UTF-8
+
+# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
+export PATH="$PATH:$HOME/.rvm/bin"
+
+export PATH="/usr/local/opt/libpq/bin:$PATH"
+
+# Add GO to the path
+export GOROOT=`go env GOROOT`
+export GOPATH=$HOME/go
+export PATH=$GOPATH/bin:$PATH
+
+# Make ASDF initialize
+. /opt/homebrew/opt/asdf/libexec/asdf.sh
+
+# Trying to fix openssl issues with asdf
+export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
+
+

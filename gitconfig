@@ -13,3 +13,5 @@
 	unstage = reset HEAD --
 	stash-unstaged = stash -k -u
 	col = checkout @{-1}
+	alias = config --get-regexp '^alias\\.'
+	new-branch = checkout -B
