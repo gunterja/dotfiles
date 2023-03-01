@@ -272,6 +272,9 @@ function! LightlineFilename()
   return expand('%')
 endfunction
 
+" Copy the relative file path of the current buffer to clipboard
+nnoremap <leader>f :!echo -n % \| pbcopy<cr>:echom "FilePath copied to clipboard!"<CR>
+
 " Display the git branch name in the lightline bar
 function! LightlineFugitive()
   if exists("*FugitiveHead()")
