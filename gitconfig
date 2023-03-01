@@ -2,6 +2,7 @@
 [user]
 	name = Jeremy Gunter
 	email = gunterja@gmail.com
+	signingkey = 6404AD02FAE61929
 [color]
 	ui = auto
 [core]
@@ -15,3 +16,7 @@
 	col = checkout @{-1}
 	alias = config --get-regexp '^alias\\.'
 	new-branch = checkout -B
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg

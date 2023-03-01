@@ -185,7 +185,8 @@ imap <C-s> <esc>:w<CR>
 " Custom mappings to open and source .vimrc
 "nmap <Leader>vr :vsp $MYVIMRC<CR>
 nmap <Leader>vr :vsp ~/.vimrc<CR>
-nmap <Leader>so :source $MYVIMRC<CR>
+"nmap <Leader>so :source $MYVIMRC<CR>
+nmap <Leader>so :source ~/.vimrc<CR>
 
 " Rebind keys for neovim's terminal mode
 if has('nvim')
@@ -249,21 +250,33 @@ let g:lightline = {
       \   'modified': '%{&filetype=="help"?"":&modified?"+":&modifiable?"":"-"}'
       \ },
       \ 'component_function': {
-      \   'fugitive': 'LightlineFugitive'
+      \   'fugitive': 'LightlineFugitive',
+      \   'filename': 'LightlineFilename'
       \ },
       \ 'component_visible_condition': {
       \   'readonly': '(&filetype!="help"&& &readonly)',
       \   'modified': '(&filetype!="help"&&(&modified||!&modifiable))',
-      \   'fugitive': '(exists("*fugitive#head") && ""!=fugitive#head())'
+      \   'fugitive': '(exists("*FugitiveHead") && ""!=FugitiveHead())'
       \ },
       \ 'separator': { 'left': '', 'right': '' },
       \ 'subseparator': { 'left': '', 'right': '' }
       \ }
 
+" Display the relative filename in lightline
+function! LightlineFilename()
+  let root = fnamemodify(get(b:, 'git_dir'), ':h')
+  let path = expand('%:p')
+  if path[:len(root)-1] ==# root
+    return path[len(root)+1:]
+  endif
+  return expand('%')
+endfunction
+
+" Display the git branch name in the lightline bar
 function! LightlineFugitive()
-  if exists("*fugitive#head")
+  if exists("*FugitiveHead()")
     let mark = ' '
-    let branch = fugitive#head()
+    let branch = FugitiveHead()
     return branch !=# '' ? ' '.branch : ''
   endif
   return ''
