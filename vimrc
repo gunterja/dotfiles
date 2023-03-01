@@ -32,6 +32,7 @@ Plugin 'roxma/vim-hug-neovim-rpc'
 Plugin 'sheerun/vim-polyglot'
 Plugin 'tpope/vim-rails'
 Plugin 'tpope/vim-repeat'
+Plugin 'thoughtbot/vim-rspec'
 Plugin 'vim-ruby/vim-ruby'
 Plugin 'tpope/vim-sensible'
 Plugin 'tpope/vim-surround'
@@ -350,3 +351,12 @@ augroup vimrc_golang
   endif
 augroup END
 
+
+" RSpec.vim mappings
+map <Leader>t :call RunCurrentSpecFile()<CR>
+map <Leader>s :call RunNearestSpec()<CR>
+map <Leader>l :call RunLastSpec()<CR>
+map <Leader>a :call RunAllSpecs()<CR>
+
+" Tell RSpec.vim to use iTerm2
+let g:rspec_runner = "os_x_iterm2"
