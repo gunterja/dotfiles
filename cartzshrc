@@ -50,6 +50,9 @@ alias zshconfig='nvim ~/.zshrc'
 alias locals='nvim ~/.local_aliases'
 alias tt='torture_test'
 alias star_wars='nc towel.blinkenlights.nl 23'
+alias gcom='git checkout main'
+alias gcom!='git checkout main && git pull'
+
 
 # Local Aliases
 source ~/.local_aliases
