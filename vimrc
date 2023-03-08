@@ -361,3 +361,20 @@ map <Leader>a :call RunAllSpecs()<CR>
 
 " Tell RSpec.vim to use iTerm2
 let g:rspec_runner = "os_x_iterm2"
+
+" Set the column marker to 81 characters
+set colorcolumn=+1
+
+" Add a function to toggle the color column
+function! ToggleColorColumn()
+  if &colorcolumn == ""
+    set colorcolumn=+1
+    echo "Color column enabled"
+  else
+    set colorcolumn=""
+    echo "Color column disabled"
+  endif
+  redraw
+endfunction
+
+map <Leader>v :call ToggleColorColumn()<CR>
