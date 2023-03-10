@@ -206,8 +206,10 @@ endif
 
 " Fuzzy Finder plugins and using pt for searching
 let g:ctrlp_map = ',f' "type comma and then f to activate ctrlP
-let g:ctrlp_cmd = 'CtrlPMixed' "start CtrlP in Mixed mode
-let g:ctrlp_working_path_mode = 'ra' "Look for files in this project
+"let g:ctrlp_cmd = 'CtrlPMixed' "start CtrlP in Mixed mode
+let g:ctrlp_cmd = 'CtrlP' "start CtrlP in files mode
+"let g:ctrlp_working_path_mode = 'ra' "Look for files in this project
+let g:ctrlp_working_path_mode =  0 "Look for files in this directory only
 
 " use a custom command to do searching instead of CtrlP's built in search
 " which is slow.
@@ -363,12 +365,12 @@ map <Leader>a :call RunAllSpecs()<CR>
 let g:rspec_runner = "os_x_iterm2"
 
 " Set the column marker to 81 characters
-set colorcolumn=+1
+set colorcolumn=+21
 
 " Add a function to toggle the color column
 function! ToggleColorColumn()
   if &colorcolumn == ""
-    set colorcolumn=+1
+    set colorcolumn=+21
     echo "Color column enabled"
   else
     set colorcolumn=""
@@ -378,3 +380,17 @@ function! ToggleColorColumn()
 endfunction
 
 map <Leader>v :call ToggleColorColumn()<CR>
+
+" higlight search but not when sourcing .vimrc
+" This prevents the search highlighting from being applied when sourcing the
+" .vimrc file.
+set hls
+let @/ = ""
+
+" Mappings to move a selected line up or down
+nnoremap <silent> <C-j> :m .+1<CR>==
+nnoremap <silent> <C-k> :m .-2<CR>==
+inoremap <silent> <C-j> <Esc>:m .+1<CR>==gi
+inoremap <silent> <C-k> <Esc>:m .-2<CR>==gi
+vnoremap <silent> <C-j> :m '>+1<CR>gv=gv
+vnoremap <silent> <C-k> :m '<-2<CR>gv=gv
