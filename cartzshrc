@@ -67,19 +67,6 @@ killport() { lsof -i tcp:$1 | awk 'NR!=1 {print $2}' | xargs kill ; }
 # Kill and remove all running docker containers
 container-killall() { docker ps -aq | xargs docker stop | xargs docker rm ; }
 
-# Reset all the SpringHealth docker DBs
-reset-docker-db () {
-  echo 'resetting docker databases'
-  make rotom-schema
-..make rotom-migrate
-..make rotom-seed
-..make diglet-refresh-db
-..make clear-access-token
-..make rotom-export-users
-..make diglet-update-passwords
-..echo 'docker databases reset'
-}
-
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
 # HYPHEN_INSENSITIVE="true"
@@ -114,9 +101,6 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Add RVM to PATH for scripting. Make sure this is the last PATH variable change.
-export PATH="$PATH:$HOME/.rvm/bin"
-
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 # Add GO to the path
@@ -131,3 +115,11 @@ export PATH=$GOPATH/bin:$PATH
 export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
 
 
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/jeremygunter/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jeremygunter/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/jeremygunter/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jeremygunter/google-cloud-sdk/completion.zsh.inc'; fi
+
+export EDITOR="nvim"
