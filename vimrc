@@ -5,7 +5,7 @@ filetype off                  " required
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+" call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
 Plugin 'VundleVim/Vundle.vim'
@@ -56,7 +56,9 @@ filetype plugin indent on
 " Put your non-Plugin stuff after this line
 
 " Turn deoplete on by default
-call deoplete#enable()
+" Disabling deoplete for now because it conflicts with CoPilot
+" auto-complete and I prefer the CoPilot suggestions.
+" call deoplete#enable()
 
 " Enable Syntax Highlighting through vim-javascript plugin
 let g:javascript_plugin_jsdoc = 1
@@ -364,6 +366,9 @@ map <Leader>a :call RunAllSpecs()<CR>
 " Tell RSpec.vim to use iTerm2
 let g:rspec_runner = "os_x_iterm2"
 
+" Make it use bundle exec because fucking reasons
+let g:rspec_command = "!bundle exec rspec {spec}"
+
 " Set the column marker to 101 characters
 set colorcolumn=+21
 
@@ -394,3 +399,6 @@ inoremap <silent> <C-j> <Esc>:m .+1<CR>==gi
 inoremap <silent> <C-k> <Esc>:m .-2<CR>==gi
 vnoremap <silent> <C-j> :m '>+1<CR>gv=gv
 vnoremap <silent> <C-k> :m '<-2<CR>gv=gv
+
+" Remap the copilot-next to use option key
+nmap <M-]> <D-'>

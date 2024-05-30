@@ -15,6 +15,7 @@ SPACESHIP_BATTERY_SHOW="false"
 SPACESHIP_DIR_COLOR="184"
 SPACESHIP_DIR_TRUNC_REPO="true"
 SPACESHIP_DIR_TRUNC="0"
+SPACESHIP_DIR_SUFFIX=" "
 SPACESHIP_DOCKER_COMPOSE_SHOW="false"
 SPACESHIP_EXEC_TIME_SHOW="false"
 SPACESHIP_GIT_BRANCH_COLOR="164"
@@ -59,7 +60,7 @@ source ~/.local_aliases
 
 # Custom Functions
 torture_test() {
-  for i in `seq $1` ; do rspec $2 ; [[ ! $? = 0 ]] && break ; done
+  for i in `seq $1` ; do bundle exec rspec $2 ; [[ ! $? = 0 ]] && break ; done
 }
 
 killport() { lsof -i tcp:$1 | awk 'NR!=1 {print $2}' | xargs kill ; }
@@ -90,7 +91,7 @@ HIST_STAMPS="dd.mm.yyyy"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git rails ruby zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting)
+plugins=(git rails ruby bundler zsh-autosuggestions zsh-syntax-highlighting fast-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -104,9 +105,9 @@ source $ZSH/oh-my-zsh.sh
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 # Add GO to the path
-export GOROOT=`go env GOROOT`
+export GOROOT="$(brew --prefix golang)/libexec"
 export GOPATH=$HOME/go
-export PATH=$GOPATH/bin:$PATH
+export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
 # Make ASDF initialize
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
@@ -123,3 +124,23 @@ if [ -f '/Users/jeremygunter/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/je
 if [ -f '/Users/jeremygunter/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jeremygunter/google-cloud-sdk/completion.zsh.inc'; fi
 
 export EDITOR="nvim"
+export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
+
+# Suggestions from homebrew
+export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/libffi/include"
+
+export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig"
+
+# Load the iTerm2 shell integration
+source ~/.iterm2_shell_integration.zsh
+
+
+# Created by `pipx` on 2024-05-29 15:36:43
+#export PATH="$PATH:/Users/jeremygunter/.local/bin"
+
+# Make sure python is in the path
+export PATH="/Users/jeremygunter/.asdf/shims/python:$PATH"
+
+
+if [ -f "/Users/jeremygunter/.config/fabric/fabric-bootstrap.inc" ]; then . "/Users/jeremygunter/.config/fabric/fabric-bootstrap.inc"; fi
