@@ -65,6 +65,7 @@ torture_test() {
   for i in `seq $1` ; do bundle exec rspec $2 ; [[ ! $? = 0 ]] && break ; done
 }
 
+# Kill the process that is using the specified port i.e. killport 3000
 killport() { lsof -i tcp:$1 | awk 'NR!=1 {print $2}' | xargs kill ; }
 
 # Kill and remove all running docker containers
