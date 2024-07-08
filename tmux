@@ -17,7 +17,7 @@ bind-key - split-window -v
 bind-key \ split-window -h
 
 # Bindings to allow you to resize a pane with h,j,k,l keys
-bind j resize-pane -D 10 
+bind j resize-pane -D 10
 bind k resize-pane -U 10
 bind l resize-pane -L 10
 bind h resize-pane -R 10
@@ -36,10 +36,10 @@ set-option -g renumber-windows on
 bind-key b break-pane -d
 
 # Bindings for navigation between panes
-# bind-key -n C-h select-pane -L
-# bind-key -n C-j select-pane -D
-# bind-key -n C-k select-pane -U
-# bind-key -n C-l select-pane -R
+bind-key -n C-h select-pane -L
+bind-key -n C-j select-pane -D
+bind-key -n C-k select-pane -U
+bind-key -n C-l select-pane -R
 
 # Status bar colors
 set-option -g status-bg '#666666'
@@ -48,7 +48,7 @@ set-option -g status-fg '#aaaaaa'
 # Make the status bar message longer and more useful
 set-option -g status-left-length 50
 set-option -g status-right-length 50
-set-option -g status-right " #(battery -ta) #(date '+%a, %d %b %Y - %H:%M %p') " 
+set-option -g status-right " #(battery -ta) #(date '+%a, %d %b %Y - %H:%M %p') "
 
 ####  Scrollback / Copy Mode settings ####
 
@@ -56,12 +56,12 @@ set-option -g status-right " #(battery -ta) #(date '+%a, %d %b %Y - %H:%M %p') "
 setw -g mode-keys vi
 
 # Setup 'v' to begin selection as in Vim
-bind-key -t vi-copy v begin-selection
-bind-key -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
+# bind-key -t vi-copy v begin-selection
+# bind-key -t vi-copy y copy-pipe "reattach-to-user-namespace pbcopy"
 
 # Update default binding of `Enter` to also use copy-pipe
-unbind -t vi-copy Enter
-bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
+# unbind -t vi-copy Enter
+# bind-key -t vi-copy Enter copy-pipe "reattach-to-user-namespace pbcopy"
 
 
 
