@@ -100,11 +100,6 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 # Add GO to the path
@@ -118,7 +113,8 @@ export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 # Trying to fix openssl issues with asdf
 export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
 
-
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
 
 # The next line updates PATH for the Google Cloud SDK.
 if [ -f '/Users/jeremygunter/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jeremygunter/google-cloud-sdk/path.zsh.inc'; fi
@@ -127,23 +123,20 @@ if [ -f '/Users/jeremygunter/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/je
 if [ -f '/Users/jeremygunter/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jeremygunter/google-cloud-sdk/completion.zsh.inc'; fi
 
 export EDITOR="nvim"
+
+# Add Postgres to the path
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 
 # Suggestions from homebrew
 export LDFLAGS="-L/opt/homebrew/opt/libffi/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/libffi/include"
-
 export PKG_CONFIG_PATH="/opt/homebrew/opt/libffi/lib/pkgconfig"
 
 # Load the iTerm2 shell integration
 source ~/.iterm2_shell_integration.zsh
 
-
-# Created by `pipx` on 2024-05-29 15:36:43
-#export PATH="$PATH:/Users/jeremygunter/.local/bin"
-
 # Make sure python is in the path
 export PATH="/Users/jeremygunter/.asdf/shims/python:$PATH"
 
-
+# Load the fabric bootstrap file
 if [ -f "/Users/jeremygunter/.config/fabric/fabric-bootstrap.inc" ]; then . "/Users/jeremygunter/.config/fabric/fabric-bootstrap.inc"; fi
