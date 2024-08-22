@@ -402,3 +402,9 @@ vnoremap <silent> <C-k> :m '<-2<CR>gv=gv
 
 " Remap the copilot-next to use option key
 nmap <M-]> <D-'>
+
+" Remap <leader>p to paste yanked text after the last character on the current line in normal mode
+nnoremap <leader>p g$p
+
+" Remap <leader>V to visually select to the last non-blank character on the line without selecting the newline
+nnoremap <leader>V v g_
