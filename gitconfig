@@ -17,6 +17,7 @@
 	aliases = config --get-regexp '^alias\\.'
 	new-branch = checkout -B
 	cleanup = ! git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" {print $1}' | xargs -r git branch -D
+	nb = checkout -B
 [commit]
 	gpgsign = true
 [gpg]
