@@ -55,6 +55,7 @@ alias tt='torture_test'
 alias star_wars='nc towel.blinkenlights.nl 23'
 alias gcom='git checkout main'
 alias gcom!='git checkout main && git pull'
+alias gnb='git nb' # Shortened version of git nb which is a git alias for git checkout -B
 
 
 # Local Aliases
