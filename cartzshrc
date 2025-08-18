@@ -56,7 +56,7 @@ alias star_wars='nc towel.blinkenlights.nl 23'
 alias gcom='git checkout main'
 alias gcom!='git checkout main && git pull'
 alias gnb='git nb' # Shortened version of git nb which is a git alias for git checkout -B
-
+alias fabric='fabric-ai' # Alias correction for brew installed version of Fabric
 
 # Local Aliases
 source ~/.local_aliases
@@ -71,6 +71,30 @@ killport() { lsof -i tcp:$1 | awk 'NR!=1 {print $2}' | xargs kill ; }
 
 # Kill and remove all running docker containers
 container-killall() { docker ps -aq | xargs docker stop | xargs docker rm ; }
+
+# Killa
+kill_loop() {
+  if [ -z "$1" ]; then
+    echo "Usage: kill_loop <process_name>"
+    return 1
+  fi
+
+  local proc_name="$1"
+  echo "Starting kill loop for processes named: $proc_name"
+  echo "Press Ctrl+C to stop."
+
+  while true; do
+    # Find PIDs matching the process name (excluding the grep and the function itself)
+    pids=$(pgrep -f "$proc_name" | grep -v "^$$$")
+
+    if [ -n "$pids" ]; then
+      echo "Killing: $pids"
+      kill $pids 2>/dev/null
+    fi
+
+    sleep 1
+  done
+}
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
@@ -104,7 +128,8 @@ source $ZSH/oh-my-zsh.sh
 export PATH="/usr/local/opt/libpq/bin:$PATH"
 
 # Add GO to the path
-export GOROOT="$(brew --prefix golang)/libexec"
+# export GOROOT="$(brew --prefix golang)/libexec"
+export GOROOT="$(asdf where golang)/go"
 export GOPATH=$HOME/go
 export PATH="$PATH:${GOPATH}/bin:${GOROOT}/bin"
 
@@ -116,12 +141,6 @@ export PATH="/opt/homebrew/opt/openssl@3/bin:$PATH"
 
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/jeremygunter/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jeremygunter/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/jeremygunter/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jeremygunter/google-cloud-sdk/completion.zsh.inc'; fi
 
 export EDITOR="nvim"
 
@@ -139,5 +158,48 @@ source ~/.iterm2_shell_integration.zsh
 # Make sure python is in the path
 export PATH="/Users/jeremygunter/.asdf/shims/python:$PATH"
 
-# Load the fabric bootstrap file
-if [ -f "/Users/jeremygunter/.config/fabric/fabric-bootstrap.inc" ]; then . "/Users/jeremygunter/.config/fabric/fabric-bootstrap.inc"; fi
+# Initialize MacTeX
+eval "$(/usr/libexec/path_helper)"
+
+# Add the asdf path
+#export PATH="$HOME/.asdf/shims:$HOME/.asdf/bin:$PATH"
+export PATH="$(brew --prefix asdf)/bin:$PATH"
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
+
+# Added by Windsurf
+export PATH="/Users/jeremygunter/.codeium/windsurf/bin:$PATH"
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/jeremygunter/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/jeremygunter/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/jeremygunter/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/jeremygunter/google-cloud-sdk/completion.zsh.inc'; fi
+
+
+# Loop through all files in the ~/.config/fabric/patterns directory
+for pattern_file in $HOME/.config/fabric/patterns/*; do
+    # Get the base name of the file (i.e., remove the directory path)
+    pattern_name=$(basename "$pattern_file")
+
+    # Create an alias in the form: alias pattern_name="fabric --pattern pattern_name"
+    alias_command="alias $pattern_name='fabric --pattern $pattern_name'"
+
+    # Evaluate the alias command to add it to the current shell
+    eval "$alias_command"
+done
+
+yt() {
+    if [ "$#" -eq 0 ] || [ "$#" -gt 2 ]; then
+        echo "Usage: yt [-t | --timestamps] youtube-link"
+        echo "Use the '-t' flag to get the transcript with timestamps."
+        return 1
+    fi
+
+    transcript_flag="--transcript"
+    if [ "$1" = "-t" ] || [ "$1" = "--timestamps" ]; then
+        transcript_flag="--transcript-with-timestamps"
+        shift
+    fi
+    local video_link="$1"
+    fabric -y "$video_link" $transcript_flag
+}
