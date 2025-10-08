@@ -203,3 +203,10 @@ yt() {
     local video_link="$1"
     fabric -y "$video_link" $transcript_flag
 }
+
+# bun completions
+[ -s "/Users/jeremygunter/.bun/_bun" ] && source "/Users/jeremygunter/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
